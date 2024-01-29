@@ -11,7 +11,7 @@ class PersonalInfoSys
         Console.WriteLine("Here, we check if you are eligible to get an alcoholic drink from our bar.");
         Thread.Sleep(1000);
 
-        Start(); 
+        Start();
     }
 
     static void Start()
@@ -19,7 +19,8 @@ class PersonalInfoSys
         String firstName;
         bool containsDigit;
 
-        do {
+        do
+        {
             Console.Write($"Enter your first name: "); //User enters first name
             firstName = Console.ReadLine();
             containsDigit = false; //makes sure that you can only enter letters
@@ -48,7 +49,8 @@ class PersonalInfoSys
         } while (String.IsNullOrEmpty(firstName) || containsDigit);
 
         String lastName;
-        do {
+        do
+        {
             Console.Write($"Enter your last name: "); //User enters last name
             lastName = Console.ReadLine();
             containsDigit = false;
@@ -75,7 +77,7 @@ class PersonalInfoSys
                 Console.WriteLine();
 
             }
-        } while (String.IsNullOrEmpty (lastName) || containsDigit);
+        } while (String.IsNullOrEmpty(lastName) || containsDigit);
 
         double height;
         do
@@ -119,33 +121,33 @@ class PersonalInfoSys
             }
         } while (!validInput);
 
-        
-            if (ConfirmInformation(firstName, lastName, height, LEGAL_DRINKING_AGE))
+
+        if (ConfirmInformation(firstName, lastName, height, LEGAL_DRINKING_AGE))
+        {
+            if (LEGAL_DRINKING_AGE >= 21) //If greater or equal to 21, then eligible for alcohol consumption
             {
-                if (LEGAL_DRINKING_AGE >= 21) //If greater or equal to 21, then eligible for alcohol consumption
-                {
-                    Console.WriteLine("Congratulations! You are eligible for alcohol consumption.");
-                    Console.WriteLine();
-                }
-                else if (LEGAL_DRINKING_AGE == 20) //If equal to 20, display that they are close to legal age
-                {
-                    Console.WriteLine("Close, but not quite yet. You are not eligible for alcohol consumption without the guidance of an adult.");
-                    Console.WriteLine();
-                }
-                else //If age is less than 18, display how many years are left before user is able to consume alcohol
-                {
-                    Console.WriteLine("Sadly, you are still under the legal age for alcohol consumption.");
-                    int remainingYears = 21 - LEGAL_DRINKING_AGE;
-                    Console.WriteLine("You still have " + remainingYears + " years left before you are eligible for legal alcohol consumption.");
-                    Console.WriteLine();
-                }
+                Console.WriteLine("Congratulations! You are eligible for alcohol consumption.");
+                Console.WriteLine();
             }
-            else
+            else if (LEGAL_DRINKING_AGE == 20) //If equal to 20, display that they are close to legal age
             {
-                Console.WriteLine("Reinitializing questions..."); //repeats the questions
-                Thread.Sleep(2000);
-                Start();
+                Console.WriteLine("Close, but not quite yet. You are not eligible for alcohol consumption without the guidance of an adult.");
+                Console.WriteLine();
             }
+            else //If age is less than 18, display how many years are left before user is able to consume alcohol
+            {
+                Console.WriteLine("Sadly, you are still under the legal age for alcohol consumption.");
+                int remainingYears = 21 - LEGAL_DRINKING_AGE;
+                Console.WriteLine("You still have " + remainingYears + " years left before you are eligible for legal alcohol consumption.");
+                Console.WriteLine();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Reinitializing questions..."); //repeats the questions
+            Thread.Sleep(2000);
+            Start();
+        }
         bool inputTrue = false;
         do
         {
@@ -200,6 +202,6 @@ class PersonalInfoSys
             }
         } while (!trueInput);
         return false;
-    } 
+    }
 
 }
