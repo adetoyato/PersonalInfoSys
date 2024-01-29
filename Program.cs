@@ -121,6 +121,40 @@ class PersonalInfoSys
             }
         } while (!validInput);
 
+        static bool ConfirmInformation(String firstName, String lastName, double height, int LEGAL_DRINKING_AGE) //displays information entered for the user to check
+        {
+            Console.WriteLine("***************************************");
+            Console.WriteLine("Information Entered:");
+            Console.WriteLine("");
+            Console.WriteLine("First Name: " + firstName);
+            Console.WriteLine("Last Name: " + lastName);
+            Console.WriteLine("Height (in meters): " + height + " meter(s)");
+            Console.WriteLine("Age: " + LEGAL_DRINKING_AGE);
+            Console.WriteLine("");
+            Console.WriteLine("***************************************");
+            Console.WriteLine();
+            Console.WriteLine("Is the information entered correct? (Y/N)");
+
+            bool trueInput = false;
+            do
+            {
+                String booleanInput = Console.ReadLine(); //user checks if the user entered is correct or not. if yes, proceed. if no, repeat.
+                if (booleanInput.Equals("yes", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("y", StringComparison.OrdinalIgnoreCase)) //proceed
+                {
+                    return true;
+                }
+                else if (booleanInput.Equals("no", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("n", StringComparison.OrdinalIgnoreCase)) //enter information again
+                {
+                    return false;
+                }
+                else //repeat question if invalid input
+                {
+                    Console.WriteLine("Oops! It seems like you made a mistake with your input. Please use y/n to indicate your choice.");
+                    trueInput = false;
+                }
+            } while (!trueInput);
+            return false;
+        }
 
         if (ConfirmInformation(firstName, lastName, height, LEGAL_DRINKING_AGE))
         {
@@ -167,41 +201,6 @@ class PersonalInfoSys
                 Console.WriteLine("Oops! It seems like you made a mistake with your input. Please use y/n to indicate your choice."); //message prompt when input is incorrect
             }
         } while (!inputTrue);
-    }
-
-
-    static bool ConfirmInformation(String firstName, String lastName, double height, int LEGAL_DRINKING_AGE) //displays information entered for the user to check
-    {
-        Console.WriteLine("***************************************");
-        Console.WriteLine("Information Entered:");
-        Console.WriteLine("");
-        Console.WriteLine("First Name: " + firstName);
-        Console.WriteLine("Last Name: " + lastName);
-        Console.WriteLine("Height (in meters): " + height + " meter(s)");
-        Console.WriteLine("Age: " + LEGAL_DRINKING_AGE);
-        Console.WriteLine("");
-        Console.WriteLine("Are all those information correct? (Y/N)");
-        Console.WriteLine("***************************************");
-
-        bool trueInput = false;
-        do
-        {
-            String booleanInput = Console.ReadLine(); //user checks if the user entered is correct or not. if yes, proceed. if no, repeat.
-            if (booleanInput.Equals("yes", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("y", StringComparison.OrdinalIgnoreCase))
-            {
-                return true;
-            }
-            else if (booleanInput.Equals("no", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("n", StringComparison.OrdinalIgnoreCase))
-            {
-                return false;
-            }
-            else
-            {
-                Console.WriteLine("Oops! It seems like you made a mistake with your input. Please use y/n to indicate your choice.");
-                trueInput = false;
-            }
-        } while (!trueInput);
-        return false;
     }
 
 }
