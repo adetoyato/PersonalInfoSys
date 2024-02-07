@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
+using System.Windows;
 
-class PersonalInfoSys
+public class PersonalInfoSys
 {
     static void Main(string[] args)
     {
@@ -35,7 +37,7 @@ class PersonalInfoSys
             }
             if (String.IsNullOrEmpty(firstName)) //checks if there's no input
             {
-                Console.WriteLine("This is no input. Try again?");
+                Console.WriteLine("There is no input. Try again?");
             }
             else if (containsDigit) //invalidates the statement if a character involves a digit
             {
@@ -65,7 +67,7 @@ class PersonalInfoSys
             }
             if (String.IsNullOrEmpty(lastName))
             {
-                Console.WriteLine("This is no input. Try again?"); //checks if there's no input
+                Console.WriteLine("There is no input. Try again?"); //checks if there's no input
             }
             else if (containsDigit)
             {
@@ -182,25 +184,74 @@ class PersonalInfoSys
             Thread.Sleep(2000);
             Start();
         }
+
         bool inputTrue = false;
-        do
+        int selectedIndex = 0;
+
+        //asks if the user would like to use the program again
+        Console.WriteLine("Do you want to use the program again? (Use Up and Down arrow keys to choose, press Enter to select.)");
+        string[] options = { "Yes", "No" };
+        for (int i = 0; i < options.Length; i++)
         {
-            Console.WriteLine("Do you want to use the program again? Y/N?"); //Asks the user if they want to continue using the program. if yes, repeat, if no, break.
-            String booleanInput = Console.ReadLine();
-            Console.WriteLine();
-            if (booleanInput.Equals("yes", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("y", StringComparison.OrdinalIgnoreCase)) //continues the program
+            if (i == selectedIndex)
             {
-                Start();
-            }
-            else if (booleanInput.Equals("no", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("n", StringComparison.OrdinalIgnoreCase)) //ends use of the program
-            {
-                Environment.Exit(0);
+                Console.Write("-> ");
             }
             else
             {
-                Console.WriteLine("Oops! It seems like you made a mistake with your input. Please use y/n to indicate your choice."); //message prompt when input is incorrect
+                Console.Write("   ");
             }
+
+            Console.WriteLine(options[i]);
+        }
+
+        do
+        {
+            // Capture user input
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+            if (keyInfo.Key == ConsoleKey.UpArrow && selectedIndex > 0)
+            {
+                selectedIndex--;
+            }
+            else if (keyInfo.Key == ConsoleKey.DownArrow && selectedIndex < options.Length - 1)
+            {
+                selectedIndex++;
+            }
+            else if (keyInfo.Key == ConsoleKey.Enter)
+            {
+                if (options[selectedIndex].Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                {
+                    Console.WriteLine("Restarting the program, please wait...");
+                    Thread.Sleep(1000);
+                    Console.Clear();
+                    Start();
+                }
+                else if (options[selectedIndex].Equals("No", StringComparison.OrdinalIgnoreCase))
+                {
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine("Oops! It seems like there was a mistake in your input. Please only use arrow keys Up and Down to choose.");
+            }
+            Console.SetCursorPosition(0, Console.CursorTop - options.Length); //ensures that when you make a selection, the choice will not keep repeating.
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (i == selectedIndex)
+                {
+                    Console.Write("-> ");
+                }
+                else
+                {
+                    Console.Write("   ");
+                }
+
+                Console.WriteLine(options[i]);
+            }
+
         } while (!inputTrue);
     }
-
 }
