@@ -139,7 +139,7 @@ public class PersonalInfoSys
             bool trueInput = false;
             int indexSelected = 0;
 
-            Console.WriteLine("Is the information you entered correct? (Use Up and Down arrow keys to choose, press Enter to make your selection.)");
+            Console.WriteLine("Is the information you entered correct? (Use Up and Down arrow keys to choose, press Enter to make your selection.)"); //asks for confirmation about the information entered if it is correct before proceeding
             string[] option = { "Yes", "No" };
             for (int x = 0; x < option.Length; x++)
             {
