@@ -135,27 +135,73 @@ public class PersonalInfoSys
             Console.WriteLine("");
             Console.WriteLine("***************************************");
             Console.WriteLine();
-            Console.WriteLine("Is the information entered correct? (Y/N)");
 
             bool trueInput = false;
+            int indexSelected = 0;
+
+            Console.WriteLine("Is the information you entered correct? (Use Up and Down arrow keys to choose, press Enter to make your selection.)");
+            string[] option = { "Yes", "No" };
+            for (int x = 0; x < option.Length; x++)
+            {
+                if (x == indexSelected)
+                {
+                    Console.Write("-> ");
+                }
+                else
+                {
+                    Console.Write("   "); //indentation for No
+                }
+
+                Console.WriteLine(option[x]);
+            }
             do
             {
-                String booleanInput = Console.ReadLine(); //user checks if the user entered is correct or not. if yes, proceed. if no, repeat.
-                if (booleanInput.Equals("yes", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("y", StringComparison.OrdinalIgnoreCase)) //proceed
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                if (keyInfo.Key == ConsoleKey.UpArrow && indexSelected > 0)
                 {
-                    return true;
+                    indexSelected--;
                 }
-                else if (booleanInput.Equals("no", StringComparison.OrdinalIgnoreCase) || booleanInput.Equals("n", StringComparison.OrdinalIgnoreCase)) //enter information again
+                else if (keyInfo.Key == ConsoleKey.DownArrow && indexSelected < option.Length - 1)
                 {
-                    return false;
+                    indexSelected++;
                 }
-                else //repeat question if invalid input
+                else if (keyInfo.Key == ConsoleKey.Enter)
                 {
-                    Console.WriteLine("Oops! It seems like you made a mistake with your input. Please use y/n to indicate your choice.");
-                    trueInput = false;
+                    if (option[indexSelected].Equals("Yes", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                    else if (option[indexSelected].Equals("No", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Console.WriteLine("Reinitializing questions...");
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                        Start();
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Oops! It seems like you made a mistake with your selection. Please use only Up and Down arrow keys to make a selection.");
+                }
+                Console.SetCursorPosition(0, Console.CursorTop - option.Length); //ensures that when you make a selection, the choice will not keep repeating.
+                for (int x = 0; x < option.Length; x++)
+                {
+                    if (x == indexSelected)
+                    {
+                        Console.Write("-> ");
+                    }
+                    else
+                    {
+                        Console.Write("   ");
+                    }
+
+                    Console.WriteLine(option[x]);
                 }
             } while (!trueInput);
             return false;
+
         }
 
         if (ConfirmInformation(firstName, lastName, height, LEGAL_DRINKING_AGE))
@@ -199,7 +245,7 @@ public class PersonalInfoSys
             }
             else
             {
-                Console.Write("   ");
+                Console.Write("   "); //indentation for No
             }
 
             Console.WriteLine(options[i]);
